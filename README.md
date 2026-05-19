@@ -1,4 +1,4 @@
-# 🔐 Servicio de Cifrado (Secure Hash Generator)
+# 🔐 Secure Hash Generator Service
 
 Una aplicación web moderna y segura diseñada para generar hashes criptográficos irreversibles utilizando el algoritmo **Argon2id** (el estándar actual recomendado para almacenamiento de contraseñas).
 
