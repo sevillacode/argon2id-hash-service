@@ -44,6 +44,36 @@ npm run dev
 ```
 La interfaz de usuario estará disponible (generalmente) en `http://localhost:5173`.
 
+## 🔌 Uso de la API (Endpoints)
+
+La API RESTful está diseñada para consumirse mediante JSON. 
+
+**Endpoint:** `POST /index.php`
+**Headers obligatorios:** `Content-Type: application/json`
+
+### Ejemplo de Petición (cURL)
+```bash
+curl -X POST http://localhost:8000/index.php \
+  -H "Content-Type: application/json" \
+  -d '{"password":"mi_contraseña_secreta"}'
+```
+
+### Respuestas Esperadas
+- **✅ Éxito (200 OK):**
+  ```json
+  {
+    "success": true,
+    "hash": "$argon2id$v=19$m=65536,t=4,p=1$...",
+    "algorithm": "Argon2id"
+  }
+  ```
+- **❌ Rate Limit (429 Too Many Requests):** (Si haces más de 1 petición por segundo)
+  ```json
+  {
+    "error": "Límite de uso excedido. Por favor, espera 1 segundo."
+  }
+  ```
+
 ## 🛣️ Próximos Pasos (Roadmap)
 - [ ] Refactorización del Backend a **Symfony** para estructurar mejor la API.
 - [ ] Dockerización completa (contenedores separados para Nginx/PHP-FPM y el build de React).
