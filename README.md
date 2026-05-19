@@ -1,14 +1,14 @@
 # 🔐 Secure Hash Generator Service
 
-Una aplicación web moderna y segura diseñada para generar hashes criptográficos irreversibles utilizando el algoritmo **Argon2id** (el estándar actual recomendado para almacenamiento de contraseñas).
+Una aplicación web diseñada para generar hashes criptográficos utilizando el algoritmo **Argon2id** (el estándar actual recomendado para almacenamiento de contraseñas).
 
-Este proyecto ha sido construido con una arquitectura ligera basada en un frontend moderno (React) y un backend eficiente (PHP nativo), diseñado desde cero para ser fácilmente escalable, dockerizable o refactorizable a frameworks más robustos como Symfony en el futuro.
+Este proyecto ha sido construido con una arquitectura ligera basada en un frontend moderno (React) y un backend eficiente (PHP nativo), diseñado desde cero para ser fácilmente escalable, dockerizable o refactorizable a frameworks más robustos o consumido como API REST.
 
 ## ✨ Características Principales
 
-- **🛡️ Cifrado Fuerte:** Utiliza `PASSWORD_ARGON2ID` de PHP para ofrecer la máxima resistencia contra ataques de fuerza bruta y diccionarios.
-- **⚡ Rate Limiting Inteligente:** Incorpora un sistema de control de accesos (1 petición por segundo por IP) para prevenir ataques de denegación de servicio (DoS) y saturación. Funciona mediante un archivo JSON que se **autolimpia**, eliminando registros antiguos sin necesidad de bases de datos externas ni mantenimiento.
-- **🎨 Interfaz Premium (UI/UX):** Frontend construido con React y CSS nativo, presentando un diseño *Dark Mode* con efectos *Glassmorphism*, transiciones suaves y validaciones en tiempo real.
+- **🛡️ Hash:** Generación de hashes de contraseña con Argon2id.
+- **⚡ Rate Limiting:** Incorpora un sistema de control de accesos (1 petición por segundo por IP) para prevenir ataques de denegación de servicio (DoS) y saturación. Funciona mediante un archivo JSON que se **autolimpia**, eliminando registros antiguos sin necesidad de bases de datos externas ni mantenimiento.
+- **🎨 Interfaz (UI/UX):** Frontend construido con React y CSS nativo, presentando un diseño *Dark Mode* con efectos *Glassmorphism*, transiciones suaves y validaciones en tiempo real.
 - **🚀 Ligero y Sin Fricciones:** El backend en PHP nativo no requiere dependencias complejas de Composer ni configurar bases de datos. Simplemente clona y ejecuta.
 
 ## 🏗️ Arquitectura y Tecnologías
@@ -75,7 +75,7 @@ curl -X POST http://localhost:8000/index.php \
   ```
 
 ## 🛣️ Próximos Pasos (Roadmap)
-- [ ] Refactorización del Backend a **Symfony** para estructurar mejor la API.
+- [ ] Refactorización del Backend para aumentar la seguridad en los parametros de entrada y ofrecer url estandar para API.
 - [ ] Dockerización completa (contenedores separados para Nginx/PHP-FPM y el build de React).
 - [ ] Integración de SQLite o Redis para el Rate Limiting en entornos de producción de alta concurrencia.
 
