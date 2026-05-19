@@ -1,14 +1,20 @@
 # 🔐 Secure Hash Generator Service
 
-Una aplicación web diseñada para generar hashes criptográficos utilizando el algoritmo **Argon2id** (el estándar actual recomendado para almacenamiento de contraseñas).
+Aplicación web para generar hashes seguros de contraseñas utilizando **Argon2id**, el algoritmo recomendado actualmente por OWASP para el almacenamiento seguro de credenciales.
 
-Este proyecto ha sido construido con una arquitectura ligera basada en un frontend moderno (React) y un backend eficiente (PHP nativo), diseñado desde cero para ser fácilmente escalable, dockerizable o refactorizable a frameworks más robustos o consumido como API REST.
+El proyecto está construido con una arquitectura ligera basada en:
+
+- **Frontend:** React + Vite
+- **Backend:** PHP nativo
+
+Este proyecto ha sido construido con una arquitectura ligera basada en un frontend React y un backend en PHP nativo, diseñado para ser fácilmente escalable, dockerizable o refactorizable a frameworks más robustos o consumido como API.
+Su objetivo actual es servir como laboratorio técnico.
 
 ## ✨ Características Principales
 
 - **🛡️ Hash:** Generación de hashes de contraseña con Argon2id.
-- **⚡ Rate Limiting:** Incorpora un sistema de control de accesos (1 petición por segundo por IP) para prevenir ataques de denegación de servicio (DoS) y saturación. Funciona mediante un archivo JSON que se **autolimpia**, eliminando registros antiguos sin necesidad de bases de datos externas ni mantenimiento.
-- **🎨 Interfaz (UI/UX):** Frontend construido con React y CSS nativo, presentando un diseño *Dark Mode* con efectos *Glassmorphism*, transiciones suaves y validaciones en tiempo real.
+- **⚡ Rate Limit:** Incorpora un sistema de control de accesos simple (1 petición por segundo por IP) para prevenir saturación. Funciona mediante un archivo JSON que se **autolimpia**, eliminando registros antiguos sin necesidad de bases de datos externas ni mantenimiento.
+- **🎨 Interfaz (UI/UX):** Frontend construido con React y CSS nativo, presentando un diseño simple, transiciones suaves y validaciones en tiempo real.
 - **🚀 Ligero y Sin Fricciones:** El backend en PHP nativo no requiere dependencias complejas de Composer ni configurar bases de datos. Simplemente clona y ejecuta.
 
 ## 🏗️ Arquitectura y Tecnologías
@@ -16,17 +22,17 @@ Este proyecto ha sido construido con una arquitectura ligera basada en un fronte
 El proyecto está dividido en dos partes principales:
 
 ### 1. Backend (`/backend`)
-- **PHP 8+ nativo:** Proporciona la API RESTful.
+- **PHP 8+ nativo:** Proporciona la API.
 - **`index.php`:** Endpoint principal que gestiona las cabeceras CORS, recibe las peticiones POST y devuelve el hash en formato JSON.
 - **`RateLimiter.php`:** Clase encargada de leer/escribir en el archivo `rate_limits.json`, bloqueando IPs abusivas y purgando entradas viejas.
 
 ### 2. Frontend (`/frontend`)
 - **React 18 + Vite:** Proporciona un entorno de desarrollo ultrarrápido.
-- **CSS Nativo:** Estilizado sin librerías externas (sin Tailwind ni Bootstrap), demostrando que se puede lograr un aspecto premium ("WOW factor") solo con CSS moderno.
+- **CSS Nativo:** Estilizado sin librerías externas (sin Tailwind ni Bootstrap), solo con CSS.
 
 ## ⚙️ Cómo ejecutarlo localmente
 
-Al no tener dependencias de bases de datos (ni MySQL, ni Redis), levantar el proyecto es extremadamente sencillo.
+Al no tener dependencias de bases de datos (ni MySQL, ni Redis), levantar el proyecto es sencillo.
 
 ### Levantar el Backend (PHP)
 Abre una terminal en la raíz del proyecto y arranca el servidor de desarrollo integrado de PHP:
@@ -46,7 +52,7 @@ La interfaz de usuario estará disponible (generalmente) en `http://localhost:51
 
 ## 🔌 Uso de la API (Endpoints)
 
-La API RESTful está diseñada para consumirse mediante JSON. 
+La API está diseñada para consumirse mediante JSON. 
 
 **Endpoint:** `POST /index.php`
 **Headers obligatorios:** `Content-Type: application/json`
@@ -75,7 +81,8 @@ curl -X POST http://localhost:8000/index.php \
   ```
 
 ## 🛣️ Próximos Pasos (Roadmap)
-- [ ] Refactorización del Backend para aumentar la seguridad en los parametros de entrada y ofrecer url estandar para API.
+- [ ] Refactorización del Backend para aumentar la seguridad en los parametros de entrada.
+- [ ] Ofrecer url estandar para API.
 - [ ] Dockerización completa (contenedores separados para Nginx/PHP-FPM y el build de React).
 - [ ] Integración de SQLite o Redis para el Rate Limiting en entornos de producción de alta concurrencia.
 
