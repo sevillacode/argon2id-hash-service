@@ -47,11 +47,11 @@ function App() {
   return (
     <div className="container">
       <h1>Secure Hash</h1>
-      <p className="subtitle">Genera un cifrado fuerte e irreversible usando Argon2id</p>
+      <p className="subtitle">Genera un hash seguro usando Argon2id</p>
 
       <form onSubmit={handleSubmit}>
         <div className="input-group">
-          <label htmlFor="password">Contraseña a cifrar</label>
+          <label htmlFor="password">Contraseña a calcular</label>
           <input
             id="password"
             type="text"

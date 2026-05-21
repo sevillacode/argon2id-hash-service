@@ -1,6 +1,7 @@
 <?php
 
 require_once __DIR__ . '/../bootstrap.php';
+$config = require __DIR__ . '/../../config.php';
 
 initializeApi();
 
@@ -9,11 +10,11 @@ $input = getJsonInput();
 $password = requireStringField($input, 'password', 'La contraseña');
 $hash = requireStringField($input, 'hash', 'El hash');
 
-if (strlen($password) > 128) {
+if (strlen($password) > $config['limits']['max_password_length']) {
     sendJsonResponse(['error' => 'La contraseña excede el límite máximo permitido de 128 caracteres.'], 400);
 }
 
-if (strlen($hash) > 255) {
+if (strlen($hash) > $config['limits']['max_hash_length']) {
     sendJsonResponse(['error' => 'El hash excede el límite máximo permitido de 255 caracteres.'], 400);
 }
 

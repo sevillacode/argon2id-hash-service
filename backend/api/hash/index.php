@@ -1,6 +1,7 @@
 <?php
 
 require_once __DIR__ . '/../bootstrap.php';
+$config = require __DIR__ . '/../../config.php';
 
 initializeApi();
 
@@ -12,7 +13,11 @@ if (strlen($password) > 128) {
     sendJsonResponse(['error' => 'La contraseña excede el límite máximo permitido de 128 caracteres.'], 400);
 }
 
-$hash = password_hash($password, PASSWORD_ARGON2ID);
+$hash = password_hash(
+    $password,
+    PASSWORD_ARGON2ID,
+    $config['argon2id']
+);
 
 if ($hash === false) {
     sendJsonResponse(['error' => 'Fallo al generar el hash.'], 500);
