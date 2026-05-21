@@ -15,7 +15,7 @@ function App() {
     setResult(null)
 
     try {
-      const response = await fetch('http://localhost:8000/index.php', {
+      const response = await fetch('http://localhost:8000/api/hash', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

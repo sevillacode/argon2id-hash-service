@@ -7,7 +7,7 @@ header("Content-Type: application/json");
 
 // Manejo de la petición preflight (OPTIONS)
 if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
-    http_response_code(200);
+    http_response_code(204);
     exit;
 }
 
@@ -17,10 +17,10 @@ if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
     exit;
 }
 
-require_once 'RateLimiter.php';
+require_once __DIR__ . '/../../RateLimiter.php';
 
 $ip = $_SERVER['REMOTE_ADDR'] ?? '127.0.0.1';
-$limiter = new RateLimiter(__DIR__ . '/rate_limits.json');
+$limiter = new RateLimiter(__DIR__ . '/../../rate_limits.json');
 
 if (!$limiter->allowAccess($ip)) {
     http_response_code(429); // Too Many Requests

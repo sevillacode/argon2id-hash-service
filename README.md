@@ -2,84 +2,112 @@
 
 Aplicación web para generar hashes seguros de contraseñas utilizando **Argon2id**, el algoritmo recomendado actualmente por OWASP para el almacenamiento seguro de credenciales.
 
-Este proyecto ha sido construido con una arquitectura ligera basada en un frontend React y un backend en PHP nativo, diseñado para ser fácilmente escalable, dockerizable o refactorizable a frameworks más robustos o consumido como API.
+Este proyecto ha sido construido con una arquitectura ligera basada en un frontend React y un backend en PHP nativo, diseñado para ser fácilmente escalable, dockerizable, refactorizable a frameworks más robustos o consumido como API.
+
 Su objetivo actual es servir como laboratorio técnico.
 
 ## ✨ Características Principales
 
 - **🛡️ Hash:** Generación de hashes de contraseña con Argon2id.
-- **⚡ Rate Limit:** Incorpora un sistema de control de accesos simple (1 petición por segundo por IP) para prevenir saturación. Funciona mediante un archivo JSON que se **autolimpia**, eliminando registros antiguos sin necesidad de bases de datos externas ni mantenimiento.
-- **🎨 Interfaz (UI/UX):** Frontend construido con React y CSS nativo, presentando un diseño simple, transiciones suaves y validaciones en tiempo real.
-- **🚀 Ligero y Sin Fricciones:** El backend en PHP nativo no requiere dependencias complejas de Composer ni configurar bases de datos. Simplemente clona y ejecuta.
+- **⚡ Rate Limit:** Sistema simple de control de accesos por IP para reducir saturación. Funciona mediante un archivo JSON que se autolimpia, eliminando registros antiguos sin necesidad de base de datos externa.
+- **🎨 Interfaz (UI/UX):** Frontend construido con React y CSS nativo, con diseño simple, transiciones suaves y validaciones en tiempo real.
+- **🚀 Ligero y sin fricciones:** Backend en PHP nativo, sin dependencias complejas de Composer ni base de datos.
 
 ## 🏗️ Arquitectura y Tecnologías
 
-El proyecto está dividido en dos partes principales:
+### Backend (`/backend`)
 
-### 1. Backend (`/backend`)
 - **PHP 8+ nativo:** Proporciona la API.
-- **`index.php`:** Endpoint principal que gestiona las cabeceras CORS, recibe las peticiones POST y devuelve el hash en formato JSON.
-- **`RateLimiter.php`:** Clase encargada de leer/escribir en el archivo `rate_limits.json`, bloqueando IPs abusivas y purgando entradas viejas.
+- **`api/hash/index.php`:** Endpoint principal que gestiona CORS, recibe peticiones POST y devuelve el hash en formato JSON.
+- **`RateLimiter.php`:** Clase encargada de leer/escribir en `rate_limits.json`, bloqueando peticiones abusivas y purgando entradas antiguas.
 
-### 2. Frontend (`/frontend`)
-- **React 18 + Vite:** Proporciona un entorno de desarrollo ultrarrápido.
-- **CSS Nativo:** Estilizado sin librerías externas (sin Tailwind ni Bootstrap), solo con CSS.
+### Frontend (`/frontend`)
+
+- **React 18 + Vite:** Entorno de desarrollo rápido para la interfaz.
+- **CSS nativo:** Estilizado sin librerías externas como Tailwind o Bootstrap.
 
 ## ⚙️ Cómo ejecutarlo localmente
 
-Al no tener dependencias de bases de datos (ni MySQL, ni Redis), levantar el proyecto es sencillo.
+No requiere base de datos ni servicios externos.
 
-### Levantar el Backend (PHP)
-Abre una terminal en la raíz del proyecto y arranca el servidor de desarrollo integrado de PHP:
+### Levantar el Backend
+
 ```bash
 php -S localhost:8000 -t backend
 ```
-La API quedará escuchando en `http://localhost:8000`.
 
-### Levantar el Frontend (React)
-Abre una segunda terminal, navega a la carpeta del frontend, instala las dependencias y arranca Vite:
+La API quedará disponible en:
+
+```text
+http://localhost:8000
+```
+
+### Levantar el Frontend
+
 ```bash
 cd frontend
 npm install
 npm run dev
 ```
-La interfaz de usuario estará disponible (generalmente) en `http://localhost:5173`.
 
-## 🔌 Uso de la API (Endpoints)
+La interfaz estará disponible normalmente en:
 
-La API está diseñada para consumirse mediante JSON. 
+```text
+http://localhost:5173
+```
 
-**Endpoint:** `POST /index.php`
+## 🔌 Uso de la API
+
+La API está diseñada para consumirse mediante JSON.
+
+**Endpoint:** `POST /api/hash`  
 **Headers obligatorios:** `Content-Type: application/json`
 
-### Ejemplo de Petición (cURL)
+### Ejemplo con cURL
+
 ```bash
-curl -X POST http://localhost:8000/index.php \
+curl -X POST http://localhost:8000/api/hash \
   -H "Content-Type: application/json" \
   -d '{"password":"mi_contraseña_secreta"}'
 ```
 
-### Respuestas Esperadas
-- **✅ Éxito (200 OK):**
-  ```json
-  {
-    "success": true,
-    "hash": "$argon2id$v=19$m=65536,t=4,p=1$...",
-    "algorithm": "Argon2id"
-  }
-  ```
-- **❌ Rate Limit (429 Too Many Requests):** (Si haces más de 1 petición por segundo)
-  ```json
-  {
-    "error": "Límite de uso excedido. Por favor, espera 1 segundo."
-  }
-  ```
+### Respuesta satisfactoria
+
+```json
+{
+  "success": true,
+  "hash": "$argon2id$v=19$m=65536,t=4,p=1$...",
+  "algorithm": "Argon2id"
+}
+```
+
+### Rate limit excedido
+
+```json
+{
+  "error": "Límite de uso excedido. Por favor, espera 1 segundo."
+}
+```
+
+## 🔐 Consideraciones de seguridad
+
+- Uso de `password_hash()` con `PASSWORD_ARGON2ID`.
+- Validación básica de entrada.
+- Límite de longitud para evitar entradas excesivas.
+- Rate limiting simple por IP.
+- Manejo de preflight CORS mediante petición `OPTIONS`.
+
+> Este proyecto tiene finalidad educativa y demostrativa. Para producción sería recomendable añadir HTTPS, configuración por variables de entorno, un sistema de rate limiting más robusto y pruebas automatizadas.
 
 ## 🛣️ Próximos Pasos (Roadmap)
-- [x] Refactorización del Backend para aumentar la seguridad en los parametros de entrada.
-- [ ] Ofrecer url estandar para API.
-- [ ] Dockerización completa (contenedores separados para Nginx/PHP-FPM y el build de React).
-- [ ] Integración de SQLite o Redis para el Rate Limiting en entornos de producción de alta concurrencia.
+
+- [x] Refactorización del backend para mejorar la seguridad en los parámetros de entrada.
+- [x] Exponer una URL estándar para la API: `POST /api/hash`.
+- [ ] Dockerización completa.
+- [ ] Integración de SQLite o Redis para el rate limiting en entornos de mayor concurrencia.
+- [ ] Configuración parametrizable de Argon2id.
+- [ ] Tests automatizados.
 
 ## 📄 Licencia
-Este proyecto es de código abierto. Siéntete libre de utilizarlo, modificarlo y aprender de él.
+
+Este proyecto es de código abierto. Puedes utilizarlo, modificarlo y aprender de él.

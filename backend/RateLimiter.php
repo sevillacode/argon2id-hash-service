@@ -30,7 +30,7 @@ class RateLimiter {
             $lastAccess = (int)$data[$ip];
             if ($now - $lastAccess < 1) {
                 // Guardar la limpieza antes de rechazar la petición
-                file_put_contents($this->filePath, json_encode($data));
+                file_put_contents($this->filePath, json_encode($data), LOCK_EX);
                 return false; // Límite excedido (1 acceso por segundo)
             }
         }
@@ -39,7 +39,7 @@ class RateLimiter {
         $data[$ip] = $now;
 
         // Guardar los cambios en el archivo
-        file_put_contents($this->filePath, json_encode($data));
+        file_put_contents($this->filePath, json_encode($data), LOCK_EX);
 
         return true;
     }
