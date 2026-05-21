@@ -75,7 +75,7 @@ Ejemplo de contenido:
 VITE_API_BASE_URL=http://localhost:8000
 ```
 
-> El archivo `.env` contiene configuración local y no debería subirse al repositorio. El archivo `.env.example` sí debe versionarse como referencia.
+> El archivo `.env` contiene configuración local y no debe subirse al repositorio. El archivo `.env.example` se incluye como referencia.
 
 ### 2. Levantar el Backend
 
@@ -193,7 +193,7 @@ Si se supera el límite de peticiones permitido:
 
 ## ⚙️ Configuración Argon2id
 
-Los parámetros de Argon2id se definen en el backend, no se reciben como input desde el frontend.
+Los parámetros de Argon2id se definen en el backend.
 
 Ejemplo:
 
@@ -210,8 +210,6 @@ return [
     ],
 ];
 ```
-
-Esto evita que un usuario pueda forzar parámetros demasiado costosos y saturar el servidor.
 
 ## 🔐 Consideraciones de seguridad
 
