@@ -1,3 +1,4 @@
-node_modules/
 php.log
 backend/rate_limits.json
+frontend/node_modules/
+frontend/.env
