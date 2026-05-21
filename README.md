@@ -252,4 +252,4 @@ Con el backend levantado:
 
 ## 📄 Licencia
 
-Este proyecto es de código abierto. Puedes utilizarlo, modificarlo y aprender de él.
+Este proyecto se distribuye bajo licencia GPLv3. Consulta el archivo `LICENSE` para más información.
