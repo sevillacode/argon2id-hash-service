@@ -223,7 +223,19 @@ return [
 - Archivo `rate_limits.json` excluido del repositorio.
 - Archivo `.env` excluido del repositorio.
 
-> Este proyecto tiene finalidad educativa y demostrativa. Para producción sería recomendable añadir HTTPS, configuración más estricta de CORS, un sistema de rate limiting más robusto, almacenamiento persistente adecuado y pruebas automatizadas.
+> Este proyecto tiene finalidad educativa y demostrativa. Para producción sería recomendable añadir HTTPS, configuración más estricta de CORS, un sistema de rate limiting más robusto, almacenamiento persistente adecuado y una suite de pruebas automatizadas más completa.
+
+
+## Pruebas básicas
+
+El proyecto incluye un script de comprobación básica para verificar los endpoints principales de la API.
+
+Con el backend levantado:
+
+```bash
+./tests/api_smoke_test.sh
+```
+
 
 ## 🛣️ Roadmap
 
@@ -234,8 +246,9 @@ return [
 - [x] Configuración parametrizable de Argon2id.
 - [x] Dockerización básica del entorno.
 - [x] Configuración del frontend mediante `.env`.
+- [x] Pruebas básicas de API mediante script Bash.
+- [ ] Suite de pruebas automatizadas más completa.
 - [ ] Integración de SQLite o Redis para el rate limiting en entornos de mayor concurrencia.
-- [ ] Tests automatizados.
 
 ## 📄 Licencia
 
