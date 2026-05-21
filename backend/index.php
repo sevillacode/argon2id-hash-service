@@ -29,12 +29,43 @@ if (!$limiter->allowAccess($ip)) {
 }
 
 // Leer y decodificar el cuerpo JSON
-$input = json_decode(file_get_contents('php://input'), true);
-$password = $input['password'] ?? '';
+$rawInput = file_get_contents('php://input');
+$input = json_decode($rawInput, true);
 
-if (empty($password)) {
-    http_response_code(400); // Bad Request
-    echo json_encode(['error' => 'La contraseña es requerida.']);
+// 1. Validación de JSON bien formado
+if (json_last_error() !== JSON_ERROR_NONE) {
+    http_response_code(400);
+    echo json_encode(['error' => 'Formato JSON inválido.']);
+    exit;
+}
+
+// 2. Validación de presencia del campo
+if (!isset($input['password'])) {
+    http_response_code(400);
+    echo json_encode(['error' => 'El campo "password" es requerido.']);
+    exit;
+}
+
+$password = $input['password'];
+
+// 3. Validación de tipo estricto (debe ser una cadena de texto)
+if (!is_string($password)) {
+    http_response_code(400);
+    echo json_encode(['error' => 'La contraseña debe ser una cadena de texto válida.']);
+    exit;
+}
+
+// 4. Validación de contenido no vacío
+if (trim($password) === '') {
+    http_response_code(400);
+    echo json_encode(['error' => 'La contraseña no puede estar vacía o contener solo espacios.']);
+    exit;
+}
+
+// 5. Límite de longitud máxima para prevenir DoS (128 caracteres)
+if (strlen($password) > 128) {
+    http_response_code(400);
+    echo json_encode(['error' => 'La contraseña excede el límite máximo permitido de 128 caracteres.']);
     exit;
 }
 

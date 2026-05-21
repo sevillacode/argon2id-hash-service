@@ -2,11 +2,6 @@
 
 Aplicación web para generar hashes seguros de contraseñas utilizando **Argon2id**, el algoritmo recomendado actualmente por OWASP para el almacenamiento seguro de credenciales.
 
-El proyecto está construido con una arquitectura ligera basada en:
-
-- **Frontend:** React + Vite
-- **Backend:** PHP nativo
-
 Este proyecto ha sido construido con una arquitectura ligera basada en un frontend React y un backend en PHP nativo, diseñado para ser fácilmente escalable, dockerizable o refactorizable a frameworks más robustos o consumido como API.
 Su objetivo actual es servir como laboratorio técnico.
 
@@ -81,7 +76,7 @@ curl -X POST http://localhost:8000/index.php \
   ```
 
 ## 🛣️ Próximos Pasos (Roadmap)
-- [ ] Refactorización del Backend para aumentar la seguridad en los parametros de entrada.
+- [x] Refactorización del Backend para aumentar la seguridad en los parametros de entrada.
 - [ ] Ofrecer url estandar para API.
 - [ ] Dockerización completa (contenedores separados para Nginx/PHP-FPM y el build de React).
 - [ ] Integración de SQLite o Redis para el Rate Limiting en entornos de producción de alta concurrencia.
