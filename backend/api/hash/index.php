@@ -9,8 +9,8 @@ $input = getJsonInput();
 
 $password = requireStringField($input, 'password', 'La contraseña');
 
-if (strlen($password) > 128) {
-    sendJsonResponse(['error' => 'La contraseña excede el límite máximo permitido de 128 caracteres.'], 400);
+if (strlen($password) > $config['limits']['max_password_length']) {
+    sendJsonResponse(['error' => 'La contraseña excede el límite máximo permitido de '.$config['limits']['max_password_length'].' caracteres.'], 400);
 }
 
 $hash = password_hash(

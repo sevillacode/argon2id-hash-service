@@ -11,11 +11,11 @@ $password = requireStringField($input, 'password', 'La contraseña');
 $hash = requireStringField($input, 'hash', 'El hash');
 
 if (strlen($password) > $config['limits']['max_password_length']) {
-    sendJsonResponse(['error' => 'La contraseña excede el límite máximo permitido de 128 caracteres.'], 400);
+    sendJsonResponse(['error' => 'La contraseña excede el límite máximo permitido de '.$config['limits']['max_password_length'].' caracteres.'], 400);
 }
 
 if (strlen($hash) > $config['limits']['max_hash_length']) {
-    sendJsonResponse(['error' => 'El hash excede el límite máximo permitido de 255 caracteres.'], 400);
+    sendJsonResponse(['error' => 'El hash excede el límite máximo permitido de '.$config['limits']['max_hash_length'].' caracteres.'], 400);
 }
 
 $hashInfo = password_get_info($hash);
